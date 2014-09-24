@@ -1,0 +1,13 @@
+{
+  "name": "freedom-pgp-kbpgp",
+  "description": "Using kbpgp as a freedom.js pgp provider",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/freedomjs/freedom-pgp-kbpgp"
+  },
+  "main": "Gruntfile.js",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
+}
