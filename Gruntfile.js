@@ -24,6 +24,9 @@ module.exports = function(grunt) {
 
     jshint: {
       all: ['Gruntfile.js', 'karma.conf.js', 'src/*.js'],
+      options: {
+        jshintrc: true
+      }
     },
 
     uglify: {
