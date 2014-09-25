@@ -1,0 +1,122 @@
+/**
+ * PGP API - initial kbpgp implementation and demo app
+ *
+ * API for encryption, signing, and armoring a la PGP
+ * Exposes a public/private key based encryption interface
+ **/
+{
+  "name": "freedom-kbpgp",
+  "description": "kbpgp Freedom manifest",
+  "app": {
+    "script": "kb.js"
+  },
+  "provides" : [
+    "freedom-kbpgp"
+  ],
+  "api": {
+    "ERRCODE": {"type": "constant", "value": {
+      "KEYS_NOT_LOADED":    "No keys in memory - initialize first",
+      "MALFORMED":          "Malformed armored message",
+      "INVALID_PASSPHRASE": "Wrong passphrase",
+      "KEY_NOT_GENERATED":  "Trying to generate key, but it already exists",
+      "KEY_DOES_NOT_EXIST": "Trying to load a key that's not there",
+      "BAD_SIGNATURE":      "Invalid signature on call to verify"
+    }},
+
+    /**
+     * Create a pgp provider.
+     * @constructor
+     **/
+    "constructor": { "value": [{
+      "name": "string"      // This determines which keys are retrieved
+    }]},
+
+    /**
+     * Initialize a (potentially new) key pair
+     *
+     * The first time this is ever called, a new key pair is generated and
+     * stored on disk (passphrase is used to encrypt the private key when
+     * storing it to disk, and to decrypt when loading from disk) The next time
+     * it's called, it loads the previously generated keys into memory
+     **/
+    "initialize": {
+      type: "method",
+      value: ["string"],    // Passphrase for keystore
+      ret: [],              // Return nothing
+      err: { "errcode": "string", "message": "string" }
+    },
+
+    /**
+     * Export public key for providing to others as identifier
+     **/
+    "exportPublicKey": {
+      type: "method",
+      value: [],
+      ret: ["string"],      // My public key in PGP format
+      err: { "errcode": "string", "message": "string" }
+    },
+
+    /**
+     * Import a public key (e.g. to identify/communicate with a friend)
+     */
+    "importPublicKey": {
+      type: "method",
+      value: [
+        "string",           // Identifier (e.g. freedom.js social API userId)
+        "string"            // Public key in PGP format
+      ],
+      ret: [],
+      err: { "errcode": "string", "message": "string" }
+    },
+
+    "encrypt": {
+      type: "method",
+      value: [
+        "string",           // Recipients identifier
+        "buffer"            // Plaintext
+      ],
+      ret: ["buffer"],      // Return ciphertext
+      err: { "errcode": "string", "message": "string" }
+    },
+
+    "decrypt": {
+      type: "method",
+      value: ["buffer"],    // Ciphertext
+      ret: ["buffer"],      // Return plaintext
+      err: { "errcode": "string", "message": "string" }
+    },
+
+    "verify": {
+      type: "method",
+      value: ["buffer"],    // Signed armored message
+      ret: ["string"],      // Identifier of the signer (see importPublicKey)
+      err: { "errcode": "string", "message": "string" }
+    },
+
+    "sign": {
+      type: "method",
+      value: ["buffer"],    // Original message
+      ret: ["buffer"],      // Signed armored message
+      err: { "errcode": "string", "message": "string" }
+    },
+
+    "armor": {
+      type: "method",
+      value: ["buffer"],    // Unarmored message
+      ret: ["buffer"],      // Armored message
+      err: { "errcode": "string", "message": "string" }
+    },
+
+    "dearmor": {
+      type: "method",
+      value: ["buffer"],    // Armored message
+      ret: ["buffer"],      // Unarmored message
+      err: { "errcode": "string", "message": "string" }
+    }
+  },
+
+  "permissions": [
+    "core.log",
+    "core.storage"
+  ]
+}
