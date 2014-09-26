@@ -1,5 +1,13 @@
 module.exports = function(grunt) {
   grunt.initConfig({
+    browserify: {
+      dist: {
+        files: {
+          'build/kbpgp.js': ['./node_modules/kbpgp/lib/main.js']
+        }
+      }
+    },
+
     karma: {
       options: {
         configFile: 'karma.conf.js'
@@ -23,31 +31,24 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      all: ['Gruntfile.js', 'karma.conf.js', 'src/*.js'],
+      all: ['src/*.js'],
       options: {
         jshintrc: true
-      }
-    },
-
-    uglify: {
-      freedom_kbpgp: {
-        files: {
-          'freedom-kbpgp.min.js': ['src/freedom-kbpgp.js']
-        }
       }
     },
 
     clean: ['freedom-kbpgp.min.js']
   });
 
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('build', [
     'jshint',
-    'uglify'
+    'browserify'
   ]);
 
   grunt.registerTask('default', ['build', 'karma:phantom']);

@@ -1,14 +1,8 @@
-/**
- * PGP API - initial kbpgp implementation and demo app
- *
- * API for encryption, signing, and armoring a la PGP
- * Exposes a public/private key based encryption interface
- **/
 {
   "name": "freedom-kbpgp",
   "description": "kbpgp Freedom manifest",
   "app": {
-    "script": "kb.js"
+    "script": ["kbpgp.js", "freedom-kbpgp.js"]
   },
   "provides" : [
     "freedom-kbpgp"
@@ -23,47 +17,29 @@
       "BAD_SIGNATURE":      "Invalid signature on call to verify"
     }},
 
-    /**
-     * Create a pgp provider.
-     * @constructor
-     **/
     "constructor": { "value": [{
-      "name": "string"      // This determines which keys are retrieved
+      "name": "string"
     }]},
 
-    /**
-     * Initialize a (potentially new) key pair
-     *
-     * The first time this is ever called, a new key pair is generated and
-     * stored on disk (passphrase is used to encrypt the private key when
-     * storing it to disk, and to decrypt when loading from disk) The next time
-     * it's called, it loads the previously generated keys into memory
-     **/
     "initialize": {
       type: "method",
-      value: ["string"],    // Passphrase for keystore
-      ret: [],              // Return nothing
+      value: ["string"],
+      ret: [],
       err: { "errcode": "string", "message": "string" }
     },
 
-    /**
-     * Export public key for providing to others as identifier
-     **/
     "exportPublicKey": {
       type: "method",
       value: [],
-      ret: ["string"],      // My public key in PGP format
+      ret: ["string"],
       err: { "errcode": "string", "message": "string" }
     },
 
-    /**
-     * Import a public key (e.g. to identify/communicate with a friend)
-     */
     "importPublicKey": {
       type: "method",
       value: [
-        "string",           // Identifier (e.g. freedom.js social API userId)
-        "string"            // Public key in PGP format
+        "string",
+        "string"
       ],
       ret: [],
       err: { "errcode": "string", "message": "string" }
@@ -72,45 +48,45 @@
     "encrypt": {
       type: "method",
       value: [
-        "string",           // Recipients identifier
-        "buffer"            // Plaintext
+        "string",
+        "buffer"
       ],
-      ret: ["buffer"],      // Return ciphertext
+      ret: ["buffer"],
       err: { "errcode": "string", "message": "string" }
     },
 
     "decrypt": {
       type: "method",
-      value: ["buffer"],    // Ciphertext
-      ret: ["buffer"],      // Return plaintext
+      value: ["buffer"],
+      ret: ["buffer"],
       err: { "errcode": "string", "message": "string" }
     },
 
     "verify": {
       type: "method",
-      value: ["buffer"],    // Signed armored message
-      ret: ["string"],      // Identifier of the signer (see importPublicKey)
+      value: ["buffer"],
+      ret: ["string"],
       err: { "errcode": "string", "message": "string" }
     },
 
     "sign": {
       type: "method",
-      value: ["buffer"],    // Original message
-      ret: ["buffer"],      // Signed armored message
+      value: ["buffer"],
+      ret: ["buffer"],
       err: { "errcode": "string", "message": "string" }
     },
 
     "armor": {
       type: "method",
-      value: ["buffer"],    // Unarmored message
-      ret: ["buffer"],      // Armored message
+      value: ["buffer"],
+      ret: ["buffer"],
       err: { "errcode": "string", "message": "string" }
     },
 
     "dearmor": {
       type: "method",
-      value: ["buffer"],    // Armored message
-      ret: ["buffer"],      // Unarmored message
+      value: ["buffer"],
+      ret: ["buffer"],
       err: { "errcode": "string", "message": "string" }
     }
   },

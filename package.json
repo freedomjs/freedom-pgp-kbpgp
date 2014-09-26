@@ -6,11 +6,12 @@
     "type": "git",
     "url": "https://github.com/freedomjs/freedom-pgp-kbpgp"
   },
-  "main": "Gruntfile.js",
+  "main": "src/freedom-kbpgp.js",
   "devDependencies": {
-    "freedom": "^0.5.6",
     "grunt": "^0.4.5",
+    "grunt-browserify": "^3.0.1",
     "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.6.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-karma": "^0.9.0",
@@ -20,5 +21,8 @@
     "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "kbpgp": "^1.1.0"
+  },
+  "peerDependencies": {
+    "freedom": "^0.5.6"
   }
 }
