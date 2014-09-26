@@ -22,77 +22,77 @@
     }]},
 
     "initialize": {
-      type: "method",
-      value: ["string"],
-      ret: [],
-      err: { "errcode": "string", "message": "string" }
+      "type": "method",
+      "value": ["string"],
+      "ret": [],
+      "err": { "errcode": "string", "message": "string" }
     },
 
     "exportPublicKey": {
-      type: "method",
-      value: [],
-      ret: ["string"],
-      err: { "errcode": "string", "message": "string" }
+      "type": "method",
+      "value": [],
+      "ret": ["string"],
+      "err": { "errcode": "string", "message": "string" }
     },
 
     "importPublicKey": {
-      type: "method",
-      value: [
+      "type": "method",
+      "value": [
         "string",
         "string"
       ],
-      ret: [],
-      err: { "errcode": "string", "message": "string" }
+      "ret": [],
+      "err": { "errcode": "string", "message": "string" }
     },
 
     "encrypt": {
-      type: "method",
-      value: [
+      "type": "method",
+      "value": [
         "string",
         "buffer"
       ],
-      ret: ["buffer"],
-      err: { "errcode": "string", "message": "string" }
+      "ret": ["buffer"],
+      "err": { "errcode": "string", "message": "string" }
     },
 
     "decrypt": {
-      type: "method",
-      value: ["buffer"],
-      ret: ["buffer"],
-      err: { "errcode": "string", "message": "string" }
+      "type": "method",
+      "value": ["buffer"],
+      "ret": ["buffer"],
+      "err": { "errcode": "string", "message": "string" }
     },
 
     "verify": {
-      type: "method",
-      value: ["buffer"],
-      ret: ["string"],
-      err: { "errcode": "string", "message": "string" }
+      "type": "method",
+      "value": ["buffer"],
+      "ret": ["string"],
+      "err": { "errcode": "string", "message": "string" }
     },
 
     "sign": {
-      type: "method",
-      value: ["buffer"],
-      ret: ["buffer"],
-      err: { "errcode": "string", "message": "string" }
+      "type": "method",
+      "value": ["buffer"],
+      "ret": ["buffer"],
+      "err": { "errcode": "string", "message": "string" }
     },
 
     "armor": {
-      type: "method",
-      value: ["buffer"],
-      ret: ["buffer"],
-      err: { "errcode": "string", "message": "string" }
+      "type": "method",
+      "value": ["buffer"],
+      "ret": ["buffer"],
+      "err": { "errcode": "string", "message": "string" }
     },
 
     "dearmor": {
-      type: "method",
-      value: ["buffer"],
-      ret: ["buffer"],
-      err: { "errcode": "string", "message": "string" }
+      "type": "method",
+      "value": ["buffer"],
+      "ret": ["buffer"],
+      "err": { "errcode": "string", "message": "string" }
     }
   },
 
   "permissions": [
-    "core.log",
+    "core.logger",
     "core.storage"
   ]
 }

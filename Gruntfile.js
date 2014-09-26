@@ -20,6 +20,13 @@ module.exports = function(grunt) {
         flatten: true,
         filter: 'isFile',
         expand: true
+      },
+      freedom: {
+        src: ['node_modules/freedom/freedom.js*'],
+        dest: 'build/',
+        flatten: true,
+        filter: 'isFile',
+        expand: true
       }
     },
 
@@ -52,20 +59,32 @@ module.exports = function(grunt) {
       }
     },
 
+    connect: {
+      demo: {
+        options: {
+          port: 8000,
+          keepalive: true,
+          base: ['./', 'build/'],
+          open: 'http://localhost:8000/build/demo.html'
+        }
+      }
+    },
+
     clean: ['build/']
   });
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-karma');
 
   grunt.registerTask('build', [
-    'jshint',
+    //'jshint',
     'browserify',
     'copy'
   ]);
 
-  grunt.registerTask('default', ['build', 'karma:phantom']);
+  grunt.registerTask('default', ['build', 'connect']);
 };

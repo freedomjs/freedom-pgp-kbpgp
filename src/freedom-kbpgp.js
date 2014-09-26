@@ -8,7 +8,7 @@
 //var kbpgp = require('kbpgp');
 
 // Global declarations for node.js
-if (typeof global !== 'undefined') {
+/*if (typeof global !== 'undefined') {
   if (typeof window === 'undefined') {
     global.window = {};
   }
@@ -22,7 +22,7 @@ if (typeof global !== 'undefined') {
   if (typeof XMLHttpRequest === 'undefined') {
     XMLHttpRequest = {};
   }
-}
+}*/
 
 var fdomkb = function() {
 };
