@@ -4,7 +4,22 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'build/kbpgp.js': ['./node_modules/kbpgp/lib/main.js']
+        },
+        options: {
+          'browserifyOptions': {
+            'standalone': 'kbpgp'
+          }
         }
+      }
+    },
+
+    copy: {
+      dist: {
+        src: ['src/*'],
+        dest: 'build/',
+        flatten: true,
+        filter: 'isFile',
+        expand: true
       }
     },
 
@@ -37,7 +52,7 @@ module.exports = function(grunt) {
       }
     },
 
-    clean: ['freedom-kbpgp.min.js']
+    clean: ['build/']
   });
 
   grunt.loadNpmTasks('grunt-browserify');
@@ -48,7 +63,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'jshint',
-    'browserify'
+    'browserify',
+    'copy'
   ]);
 
   grunt.registerTask('default', ['build', 'karma:phantom']);
