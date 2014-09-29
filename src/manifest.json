@@ -1,6 +1,7 @@
 {
-  "name": "freedom-kbpgp",
-  "description": "kbpgp Freedom manifest",
+  "name": "freedom-kbpgp demo",
+  "description": "Demonstrate kbpgp Freedom functionality",
+  "version": "0.1",
   "app": {
     "script": ["kbpgp.js", "freedom-kbpgp.js"]
   },
