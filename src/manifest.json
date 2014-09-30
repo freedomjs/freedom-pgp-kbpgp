@@ -9,6 +9,8 @@
     "freedom-kbpgp"
   ],
   "api": {
+    "_comment": "Simplified SubtleCrypto interface w/sensible defaults",
+
     "ERRCODE": {"type": "constant", "value": {
       "KEYS_NOT_LOADED":    "No keys in memory - initialize first",
       "MALFORMED":          "Malformed armored message",
@@ -23,71 +25,91 @@
     }]},
 
     "initialize": {
+      "_comment": "Creates a new keypair or loads one if it already exists",
       "type": "method",
-      "value": ["string"],
-      "ret": [],
-      "err": { "errcode": "string", "message": "string" }
-    },
-
-    "exportPublicKey": {
-      "type": "method",
-      "value": [],
-      "ret": ["string"],
-      "err": { "errcode": "string", "message": "string" }
-    },
-
-    "importPublicKey": {
-      "type": "method",
-      "value": [
-        "string",
-        "string"
-      ],
+      "value": [{
+        "passphrase": "string"
+      }],
       "ret": [],
       "err": { "errcode": "string", "message": "string" }
     },
 
     "encrypt": {
       "type": "method",
-      "value": [
-        "string",
-        "buffer"
-      ],
-      "ret": ["buffer"],
+      "value": [{
+        "key": "string",
+        "data": "string"
+      }],
+      "ret": "string",
       "err": { "errcode": "string", "message": "string" }
     },
 
     "decrypt": {
       "type": "method",
-      "value": ["buffer"],
-      "ret": ["buffer"],
-      "err": { "errcode": "string", "message": "string" }
-    },
-
-    "verify": {
-      "type": "method",
-      "value": ["buffer"],
-      "ret": ["string"],
+      "value": [{
+        "data": "string"
+      }],
+      "ret": "string",
       "err": { "errcode": "string", "message": "string" }
     },
 
     "sign": {
       "type": "method",
-      "value": ["buffer"],
-      "ret": ["buffer"],
+      "value": [{
+        "data": "string"
+      }],
+      "ret": "string",
       "err": { "errcode": "string", "message": "string" }
     },
 
-    "armor": {
+    "verify": {
       "type": "method",
-      "value": ["buffer"],
-      "ret": ["buffer"],
+      "value": [{
+        "key": "string",
+        "signature": "string",
+        "data": "string"
+      }],
+      "ret": "string",
       "err": { "errcode": "string", "message": "string" }
     },
 
-    "dearmor": {
+    "importKey": {
+      "_comment": "Import public keys from buddies",
       "type": "method",
-      "value": ["buffer"],
-      "ret": ["buffer"],
+      "value": [{
+        "key": "string",
+      }],
+      "ret": [],
+      "err": { "errcode": "string", "message": "string" }
+    },
+
+    "exportKey": {
+      "_comment": "Export your public key to share with buddies",
+      "type": "method",
+      "value": ["string"],
+      "ret": "string",
+      "err": { "errcode": "string", "message": "string" }
+    },
+
+    "wrapKey": {
+      "_comment": "Encrypt a key with another key for storage",
+      "type": "method",
+      "value": [{
+        "key": "string",
+        "wrappingKey": "string"
+      }],
+      "ret": "string",
+      "err": { "errcode": "string", "message": "string" }
+    },
+
+    "unwrapKey": {
+      "_comment": "Decrypt a wrapped key",
+      "type": "method",
+      "value": [{
+        "wrappedKey": "string",
+        "wrappingKey": "string"
+      }],
+      "ret": "string",
       "err": { "errcode": "string", "message": "string" }
     }
   },
