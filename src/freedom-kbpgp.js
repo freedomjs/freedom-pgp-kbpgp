@@ -1,26 +1,10 @@
-/*globals freedom:true, fdom, console, require, global, kbpgp*/
+/* globals freedom:true, fdom, console, require, global, kbpgp */
+/* jslint indent:2,white:true,sloppy:true */
 
 /**
  * Implementation of a crypto-pgp provider for freedom.js
  * using the Keybase PGP implementation, kbpgp.
  **/
-
-// Global declarations for node.js
-if (typeof global !== 'undefined') {
-  if (typeof window === 'undefined') {
-    global.window = {};
-  }
-  if (typeof XMLHttpRequest === 'undefined') {
-    global.XMLHttpRequest = {};
-  }
-} else {
-  if (typeof window === 'undefined') {
-    window = {};
-  }
-  if (typeof XMLHttpRequest === 'undefined') {
-    XMLHttpRequest = {};
-  }
-}
 
 console.log(kbpgp.box);  // proof that we can see kbpgp
 
