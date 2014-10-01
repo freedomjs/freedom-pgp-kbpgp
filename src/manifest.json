@@ -6,7 +6,7 @@
     "script": ["kbpgp.js", "freedom-kbpgp.js"]
   },
   "provides" : [
-    "freedom-kbpgp"
+    "freedomkbpgp"
   ],
   "api": {
     "_comment": "Simplified SubtleCrypto interface w/sensible defaults",
@@ -28,6 +28,7 @@
       "_comment": "Creates a new keypair or loads one if it already exists",
       "type": "method",
       "value": [{
+        "userid": "string",
         "passphrase": "string"
       }],
       "ret": [],
@@ -73,11 +74,35 @@
       "err": { "errcode": "string", "message": "string" }
     },
 
+    "signEncrypt": {
+      "_comment": "Sign then encrypt data",
+      "type": "method",
+      "value": [{
+        "encryptingKey": "string",
+        "signingKey": "string",
+        "data": "string"
+      }],
+      "ret": "string",
+      "err": { "errcode": "string", "message": "string" }
+    },
+
+    "decryptVerify": {
+      "_comment": "Decrypt then verify data",
+      "type": "method",
+      "value": [{
+        "decryptingKey": "string",
+        "verifyingKey": "string",
+        "data": "string"
+      }],
+      "ret": "string",
+      "err": { "errcode": "string", "message": "string" }
+    },
+
     "importKey": {
       "_comment": "Import public keys from buddies",
       "type": "method",
       "value": [{
-        "key": "string",
+        "key": "string"
       }],
       "ret": [],
       "err": { "errcode": "string", "message": "string" }
