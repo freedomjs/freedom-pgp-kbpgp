@@ -1,0 +1,146 @@
+{
+  "name": "freedomkbpgp",
+  "description": "Provide freedomkbpgp API",
+  "version": "0.1",
+  "app": {
+    "script": ["kbpgp.js", "freedom-kbpgp.js"]
+  },
+  "provides": [
+    "freedomkbpgp"
+  ],
+  "api": {
+    "freedomkbpgp": {
+      "_comment": "Simplified SubtleCrypto interface w/sensible defaults",
+
+      "ERRCODE": {"type": "constant", "value": {
+        "KEYS_NOT_LOADED":    "No keys in memory - initialize first",
+        "MALFORMED":          "Malformed armored message",
+        "INVALID_PASSPHRASE": "Wrong passphrase",
+        "KEY_NOT_GENERATED":  "Trying to generate key, but it already exists",
+        "KEY_DOES_NOT_EXIST": "Trying to load a key that's not there",
+        "BAD_SIGNATURE":      "Invalid signature on call to verify"
+      }},
+
+      "constructor": { "value": [{
+        "name": "string"
+      }]},
+
+      "initialize": {
+        "_comment": "Creates a new keypair or loads one if it already exists",
+        "type": "method",
+        "value": [{
+          "userid": "string",
+          "passphrase": "string"
+        }],
+        "ret": [],
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "encrypt": {
+        "type": "method",
+        "value": [{
+          "key": "string",
+          "data": "string"
+        }],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "decrypt": {
+        "type": "method",
+        "value": [{
+          "data": "string"
+        }],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "sign": {
+        "type": "method",
+        "value": [{
+          "data": "string"
+        }],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "verify": {
+        "type": "method",
+        "value": [{
+          "key": "string",
+          "signature": "string",
+          "data": "string"
+        }],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "signEncrypt": {
+        "_comment": "Sign then encrypt data",
+        "type": "method",
+        "value": [{
+          "encryptingKey": "string",
+          "data": "string"
+        }],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "decryptVerify": {
+        "_comment": "Decrypt then verify data",
+        "type": "method",
+        "value": [{
+          "verifyingKey": "string",
+          "data": "string"
+        }],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "importKey": {
+        "_comment": "Import public keys from buddies",
+        "type": "method",
+        "value": [{
+          "key": "string"
+        }],
+        "ret": [],
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "exportKey": {
+        "_comment": "Export your public key to share with buddies",
+        "type": "method",
+        "value": ["string"],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "wrapKey": {
+        "_comment": "Encrypt a key with another key for storage",
+        "type": "method",
+        "value": [{
+          "key": "string",
+          "wrappingKey": "string"
+        }],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "unwrapKey": {
+        "_comment": "Decrypt a wrapped key",
+        "type": "method",
+        "value": [{
+          "wrappedKey": "string",
+          "wrappingKey": "string"
+        }],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      }
+    }
+  },
+
+  "permissions": [
+    "core.logger",
+    "core.storage"
+  ]
+}
