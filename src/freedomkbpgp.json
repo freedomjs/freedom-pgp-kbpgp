@@ -1,11 +1,11 @@
 {
-  "name": "freedom-kbpgp demo",
-  "description": "Demonstrate kbpgp Freedom functionality",
+  "name": "freedomkbpgp",
+  "description": "Provide freedomkbpgp API",
   "version": "0.1",
   "app": {
     "script": ["kbpgp.js", "freedom-kbpgp.js"]
   },
-  "provides" : [
+  "provides": [
     "freedomkbpgp"
   ],
   "api": {
@@ -80,7 +80,6 @@
         "type": "method",
         "value": [{
           "encryptingKey": "string",
-          "signingKey": "string",
           "data": "string"
         }],
         "ret": "string",
@@ -91,7 +90,6 @@
         "_comment": "Decrypt then verify data",
         "type": "method",
         "value": [{
-          "decryptingKey": "string",
           "verifyingKey": "string",
           "data": "string"
         }],
