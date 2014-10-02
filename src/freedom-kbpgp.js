@@ -25,8 +25,7 @@ fdomkbpgp.prototype.initialize = function(initOpts) {
 
 /** REGISTER PROVIDER **/
 if (typeof freedom !== 'undefined') {
-  //freedom.apis.register('freedomkbpgp', fdomkbpgp);
-  freedom.freedomkbpgp.providePromises(fdomkbpgp);
+  freedom.freedomkbpgp().providePromises(fdomkbpgp);
   console.log('fdomkbpgp api registered!');
 } else {
   console.log('no freedom :(');
