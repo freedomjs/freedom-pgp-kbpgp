@@ -6,13 +6,13 @@
     "script": ["kbpgp.js", "freedom-kbpgp.js"]
   },
   "provides": [
-    "freedomkbpgp"
+    "crypto"
   ],
   "api": {
-    "freedomkbpgp": {
-      "_comment": "Simplified SubtleCrypto interface w/sensible defaults",
+    "crypto": {
+      "_comment": "Simplified crypto interface",
 
-      "ERRCODE": {"type": "constant", "value": {
+      "ERRCODE": { "type": "constant", "value": {
         "KEYS_NOT_LOADED":    "No keys in memory - initialize first",
         "MALFORMED":          "Malformed armored message",
         "INVALID_PASSPHRASE": "Wrong passphrase",
@@ -21,88 +21,10 @@
         "BAD_SIGNATURE":      "Invalid signature on call to verify"
       }},
 
-      "constructor": { "value": [{
-        "name": "string"
-      }]},
-
-      "initialize": {
+      "setup": {
         "_comment": "Creates a new keypair or loads one if it already exists",
         "type": "method",
-        "value": [{
-          "userid": "string",
-          "passphrase": "string"
-        }],
-        "ret": [],
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "encrypt": {
-        "type": "method",
-        "value": [{
-          "key": "string",
-          "data": "string"
-        }],
-        "ret": "string",
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "decrypt": {
-        "type": "method",
-        "value": [{
-          "data": "string"
-        }],
-        "ret": "string",
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "sign": {
-        "type": "method",
-        "value": [{
-          "data": "string"
-        }],
-        "ret": "string",
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "verify": {
-        "type": "method",
-        "value": [{
-          "key": "string",
-          "signature": "string",
-          "data": "string"
-        }],
-        "ret": "string",
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "signEncrypt": {
-        "_comment": "Sign then encrypt data",
-        "type": "method",
-        "value": [{
-          "encryptingKey": "string",
-          "data": "string"
-        }],
-        "ret": "string",
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "decryptVerify": {
-        "_comment": "Decrypt then verify data",
-        "type": "method",
-        "value": [{
-          "verifyingKey": "string",
-          "data": "string"
-        }],
-        "ret": "string",
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "importKey": {
-        "_comment": "Import public keys from buddies",
-        "type": "method",
-        "value": [{
-          "key": "string"
-        }],
+        "value": ["string", "string"],
         "ret": [],
         "err": { "errcode": "string", "message": "string" }
       },
@@ -110,30 +32,40 @@
       "exportKey": {
         "_comment": "Export your public key to share with buddies",
         "type": "method",
+        "value": [],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "signEncrypt": {
+        "_comment": "Sign w/private key, optionally encrypt with other key",
+        "type": "method",
+        "value": ["buffer", "string", "boolean"],
+        "ret": "buffer",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "verifyDecrypt": {
+        "_comment": "Decrypt w/private key, optionally verify with other key",
+        "type": "method",
+        "value": ["buffer", "string"],
+        "ret": { "data": "buffer", "signedBy": ["array", "string"] },
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "armor": {
+        "_comment": "ASCII armor data, and include given header",
+        "type": "method",
+        "value": ["buffer", "string"],
+        "ret": "string",
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "dearmor": {
+        "_comment": "De-armor given data, checking for given header",
+        "type": "method",
         "value": ["string"],
-        "ret": "string",
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "wrapKey": {
-        "_comment": "Encrypt a key with another key for storage",
-        "type": "method",
-        "value": [{
-          "key": "string",
-          "wrappingKey": "string"
-        }],
-        "ret": "string",
-        "err": { "errcode": "string", "message": "string" }
-      },
-
-      "unwrapKey": {
-        "_comment": "Decrypt a wrapped key",
-        "type": "method",
-        "value": [{
-          "wrappedKey": "string",
-          "wrappingKey": "string"
-        }],
-        "ret": "string",
+        "ret": "buffer",
         "err": { "errcode": "string", "message": "string" }
       }
     }

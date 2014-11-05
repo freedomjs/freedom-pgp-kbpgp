@@ -8,7 +8,7 @@
   "dependencies": {
     "mypgp": {
       "url": "freedomkbpgp.json",
-      "api": "freedomkbpgp"
+      "api": "crypto"
     }
   },
   "permissions": [

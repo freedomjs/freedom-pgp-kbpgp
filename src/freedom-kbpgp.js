@@ -8,13 +8,13 @@
 
 // native code that is visible in this scope, needed in webworker by kbpgp
 // TODO: make core.crypto (or getRandomValues) and link window back to it
-console.log(crypto.getRandomValues);
+//console.log(crypto.getRandomValues);
 
 var fdomkbpgp = function() {
   this.kbpgp = kbpgp;
 };
 
-fdomkbpgp.prototype.initialize = function(opts) {
+fdomkbpgp.prototype.setup = function(opts) {
   this.passphrase = opts.passphrase;  // TODO hash!
   this.keypair = this.kbpgp.KeyManager.generate_ecc(
     { userid : opts.userid },
@@ -24,7 +24,7 @@ fdomkbpgp.prototype.initialize = function(opts) {
       });
     });
 };
-
+/*
 fdomkbpgp.prototype.encrypt = function(opts) {
   this.kbpgp.box(
     { msg: opts.data, encrypt_for: opts.key },
@@ -45,7 +45,7 @@ fdomkbpgp.prototype.sign = function(opts) {
 };
 
 fdomkbpgp.prototype.verify = function(opts) {
-};
+};*/
 
 fdomkbpgp.prototype.signEncrypt = function(opts) {
   this.kbpgp.box(
@@ -78,21 +78,18 @@ fdomkbpgp.prototype.decryptVerify = function(opts) {
     });
 };
 
-fdomkbpgp.prototype.importKey = function(opts) {
-};
-
 fdomkbpgp.prototype.exportKey = function(opts) {
 };
 
-fdomkbpgp.prototype.wrapKey = function(opts) {
+fdomkbpgp.prototype.armor = function(opts) {
 };
 
-fdomkbpgp.prototype.unwrapKey = function(opts) {
+fdomkbpgp.prototype.dearmor = function(opts) {
 };
 
 /** REGISTER PROVIDER **/
 if (typeof freedom !== 'undefined') {
-  freedom.freedomkbpgp().providePromises(fdomkbpgp);
+  freedom.crypto().providePromises(fdomkbpgp);
   console.log('fdomkbpgp api registered!');
 } else {
   console.log('no freedom :(');
