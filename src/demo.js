@@ -7,7 +7,6 @@
  **/
 
 var pgp = freedom.mypgp();
-console.log(pgp);
 
 // TODO: test pgp API calls once crypto/getRandomValues is set up in freedom
-//pgp.initialize({ userid: 'Joe Tester', passphrase: 'abc123' });
+//pgp.setup({ userid: 'Joe Tester', passphrase: 'abc123' });

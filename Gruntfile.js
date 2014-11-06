@@ -82,6 +82,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'jshint',
+    'karma:phantom',
     'browserify',
     'copy'
   ]);

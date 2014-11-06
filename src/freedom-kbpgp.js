@@ -24,28 +24,6 @@ fdomkbpgp.prototype.setup = function(opts) {
       });
     });
 };
-/*
-fdomkbpgp.prototype.encrypt = function(opts) {
-  this.kbpgp.box(
-    { msg: opts.data, encrypt_for: opts.key },
-    function(err, result_string, result_buffer) {
-      console.log(err, result_string, result_buffer);
-    });
-};
-
-fdomkbpgp.prototype.decrypt = function(opts) {
-};
-
-fdomkbpgp.prototype.sign = function(opts) {
-  this.kbpgp.box(
-    { msg: opts.data, sign_with: this.keypair },
-    function(err, result_string, result_buffer) {
-      console.log(err, result_string, result_buffer);
-    });
-};
-
-fdomkbpgp.prototype.verify = function(opts) {
-};*/
 
 fdomkbpgp.prototype.signEncrypt = function(opts) {
   this.kbpgp.box(
