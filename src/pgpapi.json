@@ -1,5 +1,5 @@
 {
-  "name": "freedomkbpgp",
+  "name": "kbpgp",
   "description": "Provide freedomkbpgp API",
   "version": "0.1",
   "app": {
@@ -25,6 +25,14 @@
         "_comment": "Creates a new keypair or loads one if it already exists",
         "type": "method",
         "value": ["string", "string"],
+        "ret": [],
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "importKeypair": {
+        "_comment": "Import a pre-existing public/private keypair",
+        "type": "method",
+        "value": ["string", "string", "string"],
         "ret": [],
         "err": { "errcode": "string", "message": "string" }
       },
