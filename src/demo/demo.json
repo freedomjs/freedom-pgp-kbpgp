@@ -1,0 +1,37 @@
+{
+  "name": "kbpgp demo",
+  "description": "A demo to show kbpgp usage",
+  "app": {
+    "script": "demo.js",
+    "index": "index.html"
+  },
+  "provides": ["demo"],
+  "default": "demo",
+  "api": {
+    "demo": {
+      "runCryptoDemo": {
+        "type": "method",
+        "value": [],
+        "ret": []
+      },
+      "runImportDemo": {
+        "type": "method",
+        "value": ["string", "string"],
+        "ret": []
+      },
+      "print": {
+        "type": "event",
+        "value": "string"
+      }
+    }
+  },
+  "dependencies": {
+    "kbpgp": {
+      "url": "../pgpapi.json",
+      "api": "crypto"
+    }
+  },
+  "permissions": [
+    "core.storage"
+  ]
+}

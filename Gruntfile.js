@@ -15,15 +15,16 @@ module.exports = function(grunt) {
 
     copy: {
       dist: {
-        src: ['src/*'],
+        cwd: 'src/',
+        src: ['**/**'],
         dest: 'build/',
-        flatten: true,
+        flatten: false,
         filter: 'isFile',
         expand: true,
         onlyIf: 'modified'
       },
       freedom: {
-        src: ['node_modules/freedom/freedom.js*'],
+        src: [require.resolve('freedom')],
         dest: 'build/',
         flatten: true,
         filter: 'isFile',
@@ -67,7 +68,7 @@ module.exports = function(grunt) {
           port: 8000,
           keepalive: true,
           base: ['./', 'build/'],
-          open: 'http://localhost:8000/build/demo.html'
+          open: 'http://localhost:8000/build/demo/'
         }
       }
     },

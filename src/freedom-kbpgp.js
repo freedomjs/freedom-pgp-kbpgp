@@ -39,9 +39,9 @@ var fdomkbpgp = function() {
 };
 
 fdomkbpgp.prototype.setup = function(passphrase, userid) {
-  this.passphrase = opts.passphrase;  // TODO hash!
+  this.passphrase = passphrase;  // TODO hash!
   this.keypair = this.kbpgp.KeyManager.generate_ecc(
-    { userid : opts.userid },
+    { userid: userid },
     function(err, user) {
       user.sign({}, function(err) {
         console.log('ecc key generated!');
@@ -57,22 +57,22 @@ fdomkbpgp.prototype.exportKey = function() {
 
 fdomkbpgp.prototype.signEncrypt = function(data, encryptKey, sign) {
   this.kbpgp.box(
-    { msg: opts.data, encrypt_for: opts.key, sign_with: this.keypair },
+    { msg: data, encrypt_for: encryptKey, sign_with: this.keypair },
     function(err, result_string, result_buffer) {
       console.log(err, result_string, result_buffer);
     });
 };
 
 fdomkbpgp.prototype.verifyDecrypt = function(data, verifyKey) {
+  var ring = new kbpgp.keyring.KeyRing();
   if (typeof verifyKey === 'undefined') {
     verifyKey = '';
   } else {
     ring.add_key_manager(verifyKey);
   }
-  var ring = new kbpgp.keyring.KeyRing();
   ring.add_key_manager(this.keypair);
   kbpgp.unbox(
-    { keyfetch: ring, armored: opts.data },
+    { keyfetch: ring, armored: data },
     function(err, literals) {
       if (err !== null) {
         console.log('Problem: ' + err);
