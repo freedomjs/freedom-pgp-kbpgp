@@ -19,14 +19,16 @@ module.exports = function(grunt) {
         dest: 'build/',
         flatten: true,
         filter: 'isFile',
-        expand: true
+        expand: true,
+        onlyIf: 'modified'
       },
       freedom: {
         src: ['node_modules/freedom/freedom.js*'],
         dest: 'build/',
         flatten: true,
         filter: 'isFile',
-        expand: true
+        expand: true,
+        onlyIf: 'modified'
       }
     },
 
@@ -82,9 +84,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'jshint',
-    'karma:phantom',
     'browserify',
-    'copy'
+    'copy',
+    'karma:phantom'
   ]);
 
   grunt.registerTask('default', ['build', 'connect']);

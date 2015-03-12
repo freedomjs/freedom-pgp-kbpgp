@@ -1,10 +1,33 @@
 /* globals freedom:true, console, require, global, kbpgp, crypto */
 /* jslint indent:2,white:true,sloppy:true */
+/* jshint -W020 */
 
 /**
  * Implementation of a crypto-pgp provider for freedom.js
  * using the Keybase PGP implementation, kbpgp.
  **/
+
+/*console.log(crypto);
+console.log(window);
+console.log(window.crypto);*/
+window.crypto = crypto;
+
+// Global declarations for node.js
+if (typeof global !== 'undefined') {
+  if (typeof window === 'undefined') {
+    global.window = {};
+  }
+  if (typeof XMLHttpRequest === 'undefined') {
+    global.XMLHttpRequest = {};
+  }
+} else {
+  if (typeof window === 'undefined') {
+    window = {};
+  }
+  if (typeof XMLHttpRequest === 'undefined') {
+    XMLHttpRequest = {};
+  }
+}
 
 // native code that is visible in this scope, needed in webworker by kbpgp
 // TODO: make core.crypto (or getRandomValues) and link window back to it

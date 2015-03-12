@@ -1,8 +1,17 @@
-/* globals freedom:true, console, require, global, kbpgp, crypto */
+/* globals freedom:true, console, require, global, fdomkbpgp, crypto */
 /* jslint indent:2,white:true,sloppy:true */
 
 describe('kbpgp implements freedom crypto API', function() {
-  var pgp = freedom.mypgp();
+  freedom = {
+    mypgp: function() {
+      return {
+        STATUS: null,
+        ERRCODE: null
+      };
+    }
+  };
+  var pgp;
+  //var pgp = freedom.mypgp();
 
   var buffer = new ArrayBuffer(12);
   var byteView = new Uint8Array(buffer);
@@ -10,6 +19,7 @@ describe('kbpgp implements freedom crypto API', function() {
   byteView.set([49, 50, 51, 52, 49, 50, 51, 52, 49, 50, 51, 52]);
 
   beforeEach(function() {
+    pgp = new fdomkbpgp();
   });
 
   it('encrypt and decrypt', function(done) {
