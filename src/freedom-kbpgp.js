@@ -7,10 +7,10 @@
  * using the Keybase PGP implementation, kbpgp.
  **/
 
-console.log(crypto);
-console.log(window);
-console.log(window.crypto);
-window.crypto = crypto;
+/*console.log(typeof crypto);
+console.log(typeof window);
+console.log(typeof window.crypto);
+window.crypto = crypto;*/
 
 // Global declarations for node.js
 if (typeof global !== 'undefined') {
