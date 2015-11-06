@@ -8,6 +8,7 @@
   "provides": [
     "crypto"
   ],
+  "default": "crypto",
   "api": {
     "crypto": {
       "_comment": "Simplified crypto interface",
@@ -29,8 +30,16 @@
         "err": { "errcode": "string", "message": "string" }
       },
 
+      "clear": {
+        "_comment": "Clear local storage, resetting private key",
+        "type": "method",
+        "value": [],
+        "ret": [],
+        "err": { "errcode": "string", "message": "string" }
+      },
+
       "importKeypair": {
-        "_comment": "Import a pre-existing public/private keypair",
+        "_comment": "Import a public/private keypair, overwriting if needed",
         "type": "method",
         "value": ["string", "string", "string"],
         "ret": [],
@@ -38,10 +47,19 @@
       },
 
       "exportKey": {
-        "_comment": "Export your public key to share with buddies",
+        "_comment": "Export your public key and fingerprint to share/check",
         "type": "method",
         "value": [],
-        "ret": "string",
+        "ret": { "key": "string", "fingerprint": "string",
+                 "words": ["array", "string"] },
+        "err": { "errcode": "string", "message": "string" }
+      },
+
+      "getFingerprint": {
+        "_comment": "Calculate and return 20-byte public key fingerprint",
+        "type": "method",
+        "value": ["string"],
+        "ret": { "fingerprint": "string", "words": ["array", "string"] },
         "err": { "errcode": "string", "message": "string" }
       },
 
@@ -80,6 +98,7 @@
   },
 
   "permissions": [
+    "core.crypto",
     "core.logger",
     "core.storage"
   ]
