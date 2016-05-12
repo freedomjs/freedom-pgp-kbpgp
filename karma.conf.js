@@ -15,12 +15,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'build/*.js'
+      'node_modules/es6-promise/dist/promise-*.min.js',  // es6 promises
+      //'build/freedom-kbpgp.js',
+      'build/*.js',
+      'spec/*.js'
     ],
 
 
     // list of files to exclude
     exclude: [
+      'build/freedom.js'
     ],
 
 

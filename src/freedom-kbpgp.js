@@ -1,23 +1,47 @@
 /* globals freedom:true, console, require, global, kbpgp, crypto */
 /* jslint indent:2,white:true,sloppy:true */
+/* jshint -W020 */
 
 /**
  * Implementation of a crypto-pgp provider for freedom.js
  * using the Keybase PGP implementation, kbpgp.
  **/
 
+/*console.log(typeof crypto);
+console.log(typeof window);
+console.log(typeof window.crypto);
+window.crypto = crypto;*/
+
+// Global declarations for node.js
+if (typeof global !== 'undefined') {
+  if (typeof window === 'undefined') {
+    global.window = {};
+  }
+  if (typeof XMLHttpRequest === 'undefined') {
+    global.XMLHttpRequest = {};
+  }
+} else {
+  if (typeof window === 'undefined') {
+    window = {};
+  }
+  if (typeof XMLHttpRequest === 'undefined') {
+    XMLHttpRequest = {};
+  }
+}
+
 // native code that is visible in this scope, needed in webworker by kbpgp
 // TODO: make core.crypto (or getRandomValues) and link window back to it
-console.log(crypto.getRandomValues);
+//console.log(crypto.getRandomValues);
 
 var fdomkbpgp = function() {
+  console.log(kbpgp);
   this.kbpgp = kbpgp;
 };
 
-fdomkbpgp.prototype.initialize = function(opts) {
-  this.passphrase = opts.passphrase;  // TODO hash!
+fdomkbpgp.prototype.setup = function(passphrase, userid) {
+  this.passphrase = passphrase;  // TODO hash!
   this.keypair = this.kbpgp.KeyManager.generate_ecc(
-    { userid : opts.userid },
+    { userid: userid },
     function(err, user) {
       user.sign({}, function(err) {
         console.log('ecc key generated!');
@@ -25,42 +49,30 @@ fdomkbpgp.prototype.initialize = function(opts) {
     });
 };
 
-fdomkbpgp.prototype.encrypt = function(opts) {
+fdomkbpgp.prototype.importKeypair = function(passphrase, userid, privateKey) {
+};
+
+fdomkbpgp.prototype.exportKey = function() {
+};
+
+fdomkbpgp.prototype.signEncrypt = function(data, encryptKey, sign) {
   this.kbpgp.box(
-    { msg: opts.data, encrypt_for: opts.key },
+    { msg: data, encrypt_for: encryptKey, sign_with: this.keypair },
     function(err, result_string, result_buffer) {
       console.log(err, result_string, result_buffer);
     });
 };
 
-fdomkbpgp.prototype.decrypt = function(opts) {
-};
-
-fdomkbpgp.prototype.sign = function(opts) {
-  this.kbpgp.box(
-    { msg: opts.data, sign_with: this.keypair },
-    function(err, result_string, result_buffer) {
-      console.log(err, result_string, result_buffer);
-    });
-};
-
-fdomkbpgp.prototype.verify = function(opts) {
-};
-
-fdomkbpgp.prototype.signEncrypt = function(opts) {
-  this.kbpgp.box(
-    { msg: opts.data, encrypt_for: opts.key, sign_with: this.keypair },
-    function(err, result_string, result_buffer) {
-      console.log(err, result_string, result_buffer);
-    });
-};
-
-fdomkbpgp.prototype.decryptVerify = function(opts) {
+fdomkbpgp.prototype.verifyDecrypt = function(data, verifyKey) {
   var ring = new kbpgp.keyring.KeyRing();
+  if (typeof verifyKey === 'undefined') {
+    verifyKey = '';
+  } else {
+    ring.add_key_manager(verifyKey);
+  }
   ring.add_key_manager(this.keypair);
-  ring.add_key_manager(opts.verifyingKey);
   kbpgp.unbox(
-    { keyfetch: ring, armored: opts.data },
+    { keyfetch: ring, armored: data },
     function(err, literals) {
       if (err !== null) {
         console.log('Problem: ' + err);
@@ -78,21 +90,18 @@ fdomkbpgp.prototype.decryptVerify = function(opts) {
     });
 };
 
-fdomkbpgp.prototype.importKey = function(opts) {
+fdomkbpgp.prototype.armor = function(data, type) {
+  if (typeof type === 'undefined') {
+    type = 'MESSAGE';
+  }
 };
 
-fdomkbpgp.prototype.exportKey = function(opts) {
-};
-
-fdomkbpgp.prototype.wrapKey = function(opts) {
-};
-
-fdomkbpgp.prototype.unwrapKey = function(opts) {
+fdomkbpgp.prototype.dearmor = function(data) {
 };
 
 /** REGISTER PROVIDER **/
 if (typeof freedom !== 'undefined') {
-  freedom.freedomkbpgp().providePromises(fdomkbpgp);
+  freedom.crypto().providePromises(fdomkbpgp);
   console.log('fdomkbpgp api registered!');
 } else {
   console.log('no freedom :(');

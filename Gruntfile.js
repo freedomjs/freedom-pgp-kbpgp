@@ -15,18 +15,21 @@ module.exports = function(grunt) {
 
     copy: {
       dist: {
-        src: ['src/*'],
+        cwd: 'src/',
+        src: ['**/**'],
         dest: 'build/',
-        flatten: true,
+        flatten: false,
         filter: 'isFile',
-        expand: true
+        expand: true,
+        onlyIf: 'modified'
       },
       freedom: {
-        src: ['node_modules/freedom/freedom.js*'],
+        src: [require.resolve('freedom')],
         dest: 'build/',
         flatten: true,
         filter: 'isFile',
-        expand: true
+        expand: true,
+        onlyIf: 'modified'
       }
     },
 
@@ -65,7 +68,7 @@ module.exports = function(grunt) {
           port: 8000,
           keepalive: true,
           base: ['./', 'build/'],
-          open: 'http://localhost:8000/build/demo.html'
+          open: 'http://localhost:8000/build/demo/'
         }
       }
     },
@@ -83,7 +86,8 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'jshint',
     'browserify',
-    'copy'
+    'copy',
+    'karma:phantom'
   ]);
 
   grunt.registerTask('default', ['build', 'connect']);
