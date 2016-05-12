@@ -1,11 +1,18 @@
 {
-  "name": "kbpgp",
-  "description": "Provide freedomkbpgp API",
-  "version": "0.1",
+  "name": "e2e",
+  "description": "End-to-end Freedom manifest",
   "app": {
-    "script": ["kbpgp.js", "freedom-kbpgp.js"]
+    "script": [
+      "end-to-end.compiled.js",
+      "googstorage.js",
+      "hex2words.js",
+      "e2e.js"
+    ]
   },
-  "provides": [
+  "constraints": {
+    "isolation": "never"
+  },
+  "provides" : [
     "crypto"
   ],
   "default": "crypto",
@@ -49,7 +56,7 @@
       "exportKey": {
         "_comment": "Export your public key and fingerprint to share/check",
         "type": "method",
-        "value": [],
+        "value": ["boolean"],
         "ret": { "key": "string", "fingerprint": "string",
                  "words": ["array", "string"] },
         "err": { "errcode": "string", "message": "string" }
@@ -93,13 +100,20 @@
         "value": ["string"],
         "ret": "buffer",
         "err": { "errcode": "string", "message": "string" }
+      },
+
+      "ecdhBob": {
+        "_comment": "Full elliptical curve implementation in a single function",
+        "type": "method",
+        "value": ["string", "string"],
+        "ret": "buffer",
+        "err": { "errcode": "string", "message": "string" }
       }
     }
   },
 
   "permissions": [
     "core.crypto",
-    "core.logger",
     "core.storage"
   ]
 }
